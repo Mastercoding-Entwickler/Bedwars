@@ -29,6 +29,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\block\Block;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\level\sound\GhastShootSound;
+use pocketmine\tile\Sign;
 
 class Bedwars extends PluginBase implements Listener {
 
@@ -39,7 +40,6 @@ class Bedwars extends PluginBase implements Listener {
 	public $sagiri = null;
 	public $teamcolors = null;
 	public $setup = null;
-	public $prefix = self::PREFIX;
 	public $fjoin = false;
 	public $kabstand = 6;
 	public $dimension = null;
@@ -525,7 +525,7 @@ class Bedwars extends PluginBase implements Listener {
 				return false;
 			}
 		} else {
-			if ($tile instanceof \pocketmine\tile\Sign) {
+			if ($tile instanceof Sign) {
 				$text = $tile->getText();
 				if ($text['0'] == self::NAME) {
 					$player->sendMessage($this->prefix . "Du wirst Teleportiert...");
@@ -644,7 +644,7 @@ class Bedwars extends PluginBase implements Listener {
 			$this->getLogger()->info($this->prefix."Initialisiere SignUpdater auf $levelname...");
 			$tiles = $this->getServer()->getDefaultLevel()->getTiles();
 			foreach($tiles as $tile) {
-				if($tile instanceof \pocketmine\tile\Sign) {
+				if($tile instanceof Sign) {
 					$text = $tile->getText();
 					if($text[0] == self::NAME || $text[0] == f::RED."Bedwars") {
 						$this->getScheduler()->scheduleRepeatingTask(new BwSignUpdater($this, $tile), 20);
